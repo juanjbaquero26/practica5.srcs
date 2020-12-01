@@ -32,12 +32,91 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity fsm is
---  Port ( );
+ Port (
+  x : in std_logic;
+  z1: out std_logic_vector(1 downto 0);
+  z2: out std_logic_vector(1 downto 0);
+  clk: in std_logic;
+  reset : in std_logic
+  );
 end fsm;
 
 architecture Behavioral of fsm is
 
+type  state_type is(S0,S1,S2,S3,S4);
+SIGNAL CURRENT_STATE, NEXT_STATE:STATE_TYPE;
+
 begin
-
-
+SYNC_CURRENT_STATE:PROCESS(CLK,RESET)
+    BEGIN
+    IF(RISING_EDGE(CLK))THEN
+        IF(RESET='1')THEN
+            CURRENT_STATE <=S0;
+        ELSE
+            CURRENT_STATE <=NEXT_STATE;
+        END IF;
+    END IF;
+END PROCESS;
+NEXT_STATE_LOGIC: PROCESS(X,CURRENT_STATE)
+BEGIN
+    NEXT_STATE <=S0;
+    CASE(CURRENT_STATE)is
+        when S0 =>
+            IF(X='1')THEN
+                NEXT_STATE <= S1;
+            ELSE
+                NEXT_STATE <=S0;
+            END IF;
+        WHEN S1 =>
+            IF(X='1')THEN
+                NEXT_STATE <=S2;
+            ELSE
+                NEXT_STATE <=S0;
+            END IF;    
+        WHEN S2 =>
+            IF(X='1')THEN
+                NEXT_STATE <=S3;
+            ELSE
+                NEXT_STATE <=S4;
+            END IF;    
+        WHEN S3 =>
+            IF(X='1')THEN
+                NEXT_STATE <=S3;
+            ELSE
+                NEXT_STATE <=S4;
+            END IF;
+        WHEN S4 =>
+            IF(X='1')THEN
+                NEXT_STATE <=S1;
+            ELSE
+                NEXT_STATE <=S0;
+            END IF;            
+         WHEN OTHERS => NEXT_STATE <=S0;
+     END CASE;
+END PROCESS;
+OUTPUT_LOGIC: PROCESS(CURRENT_STATE)
+BEGIN
+    CASE(CURRENT_STATE)IS
+        WHEN S0 =>
+            Z1<="11";
+            Z2<="11";
+        WHEN S1 =>
+            Z1<="11";
+            Z2<="11";
+        WHEN S2 =>
+            Z1<="11";
+            Z2<="11";
+        WHEN S3 =>
+            Z1<="01";
+            Z2<="01";   
+        WHEN S4 =>
+            Z1<="10";
+            Z2<="10";                   
+        WHEN OTHERS =>
+            Z1<="11";
+            Z2<="11";
+      END CASE;
+END PROCESS;      
+    
 end Behavioral;
+
