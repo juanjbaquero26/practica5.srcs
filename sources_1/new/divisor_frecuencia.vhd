@@ -9,7 +9,7 @@ port (
 end divisor;
 
 architecture behavioral of divisor is
-	constant max_count: INTEGER := 800000;  --Numero de ciclos para cambiar el reloj
+	constant max_count: INTEGER := 5;  --Numero de ciclos para cambiar el reloj
 	signal count: INTEGER range 0 to max_count+1;   --contador que cambia los estados del reloj
 	signal clk_state: STD_LOGIC := '0';       -- senal que se lleva a la salida 
 	

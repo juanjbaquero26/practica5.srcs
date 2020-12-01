@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -52,5 +53,27 @@ blanco<=x"FFF";
 process (sw,pix_x,pix_y)
 	begin
 	case sw is
-
+		when "01" => --7
+			      if (((pix_x >= 100) and (pix_x <= 400)) and ((pix_y >= 50) and (pix_y <= 100))) then rgb_out <= negro; 
+			      elsif (((pix_x >= 300) and (pix_x <= 400)) and ((pix_y >= 101) and (pix_y <= 150))) then rgb_out <= negro;
+		          elsif (((pix_x >= 200) and (pix_x <= 400)) and ((pix_y >= 151) and (pix_y <= 200))) then rgb_out <= negro;
+		          elsif (((pix_x >= 300) and (pix_x <= 400)) and ((pix_y >= 201) and (pix_y <= 350))) then rgb_out <= negro;
+			      else rgb_out <= blanco;
+			      end if;
+		when "10" => --f
+			      if (((pix_x >= 100) and (pix_x <= 400)) and ((pix_y >= 50) and (pix_y <= 100))) then rgb_out <= negro; 
+			      elsif (((pix_x >= 100) and (pix_x <= 200)) and ((pix_y >= 101) and (pix_y <= 150))) then rgb_out <= negro;
+		          elsif (((pix_x >= 100) and (pix_x <= 300)) and ((pix_y >= 151) and (pix_y <= 200))) then rgb_out <= negro;
+		          elsif (((pix_x >= 100) and (pix_x <= 200)) and ((pix_y >= 201) and (pix_y <= 350))) then rgb_out <= negro;
+			      else rgb_out <= blanco;
+			      end if;
+		when "00" => --7
+			      if (((pix_x >= 100) and (pix_x <= 400)) and ((pix_y >= 50) and (pix_y <= 100))) then rgb_out <= negro; 
+			      elsif (((pix_x >= 300) and (pix_x <= 400)) and ((pix_y >= 101) and (pix_y <= 150))) then rgb_out <= negro;
+		          elsif (((pix_x >= 200) and (pix_x <= 400)) and ((pix_y >= 151) and (pix_y <= 200))) then rgb_out <= negro;
+		          elsif (((pix_x >= 300) and (pix_x <= 400)) and ((pix_y >= 201) and (pix_y <= 350))) then rgb_out <= negro;
+			      else rgb_out <= blanco;
+			      end if;
+		end case;
+end process;			      
 end Behavioral;
