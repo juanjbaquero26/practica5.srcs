@@ -32,12 +32,25 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity draw is
---  Port ( );
+    Port ( pix_x : in STD_LOGIC_VECTOR (9 downto 0);
+           pix_y : in STD_LOGIC_VECTOR (9 downto 0);
+           sw : in STD_LOGIC_VECTOR (1 downto 0);
+           video_on: in std_logic;
+           rgb_out : out STD_LOGIC_VECTOR (11 downto 0));
 end draw;
 
 architecture Behavioral of draw is
 
+signal negro: STD_LOGIC_VECTOR (11 downto 0);
+signal blanco: STD_LOGIC_VECTOR (11 downto 0);
+
 begin
 
+negro <= x"000";
+blanco<=x"FFF";
+
+process (sw,pix_x,pix_y)
+	begin
+	case sw is
 
 end Behavioral;
