@@ -34,10 +34,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity fsm is
  Port (
   x : in std_logic;
+  clk: in std_logic;
+  reset : in std_logic;
   z1: out std_logic_vector(1 downto 0);
   z2: out std_logic_vector(1 downto 0);
-  clk: in std_logic;
-  reset : in std_logic
+  fsm_state: out std_logic_vector(2 downto 0)  --revisar porque falta (?)
   );
 end fsm;
 
