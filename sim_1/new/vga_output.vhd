@@ -79,11 +79,7 @@ begin
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';     --reloj de 50MHz para los pixeles
     clk <= TbClock;
     stimuli : process
-    
-    	file file_pointer: text open WRITE_MODE is "vga_sync_test.txt";
-	variable line_el: line;
-	
-    begin
+	  begin
 
         rst <= '1';
         wait for 20 ns;
@@ -95,8 +91,15 @@ begin
         wait for 20 ns;
         fsmin <= '0';
         wait until vsync'event and vsync='0'; 
+        end process;
+        
+        process(clk)
+          
+    	file file_pointer: text open WRITE_MODE is "vga_sync_test.txt";
+	       variable line_el: line;
                 -- EDIT Adapt initialization as needed 
            -- EDIT Adapt initialization as needed		
+           begin
            if rising_edge(clk) then
 
 			-- Write the time
@@ -130,56 +133,6 @@ begin
     	    writeline(file_pointer, line_el); -- write the contents into the file.
 
     	end if;
-        fsmin <= '1';
-        wait for 20 ns;
-        fsmin <= '1';
-        wait for 20 ns;
-        fsmin <= '1';
-        wait until vsync'event and vsync='0'; 
-        fsmin <= '1';
-        wait   ; -- se pone una señal wait para que no se resete antes de terminar de escribir todas las banderas
         
     end process;
-    process (clk)
-	
-	file file_pointer: text open WRITE_MODE is "vga_sync_test.txt";
-	variable line_el: line;
-
-	begin
-
-		if rising_edge(clk) then
-
-			-- Write the time
-			write(line_el, now); -- write the line.
-			write(line_el, string'(":")); -- write the line.
-
-			-- Write the hsync
-			write(line_el, string'(" "));
-			write(line_el, hsync); -- write the line.
-
-			-- Write the vsync
-			write(line_el, string'(" "));
-			write(line_el, vsync); -- write the line.
-
-			-- Write the red
-			write(line_el, string'(" "));
-			write(line_el, rgb_out(11 downto 8)); -- write the line (Red color).
-			--write(line_el, red); -- write the line (Red color).
-
-			-- Write the green
-			write(line_el, string'(" "));
-			write(line_el, rgb_out(7 downto 4)); -- write the line (Green color).
-			--write(line_el, green); -- write the line (Green color).
-
-
-        	-- Write the blue
-        	write(line_el, string'(" "));
-			write(line_el, rgb_out(3 downto 0)); -- write the line (Blue color).
-			--write(line_el, blue); -- write the line (Blue color).
-
-    	    writeline(file_pointer, line_el); -- write the contents into the file.
-
-    	end if;
-	end process;	
-
 end Behavioral;
