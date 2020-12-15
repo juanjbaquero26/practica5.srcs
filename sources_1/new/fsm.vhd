@@ -36,8 +36,7 @@ entity fsm is
   x : in std_logic;
   clk: in std_logic;
   reset : in std_logic;
-  z1: out std_logic_vector(1 downto 0);
-  z2: out std_logic_vector(1 downto 0);
+  z: out std_logic_vector (1 downto 0);
   fsm_state: out std_logic_vector(2 downto 0)  --revisar porque falta (?)
   );
 end fsm;
@@ -50,17 +49,17 @@ SIGNAL CURRENT_STATE, NEXT_STATE:STATE_TYPE;
 begin
 SYNC_CURRENT_STATE:PROCESS(CLK,RESET)
     BEGIN
-    IF(RISING_EDGE(CLK))THEN
         IF(RESET='1')THEN
-            CURRENT_STATE <=S0;
-        ELSE
+            CURRENT_STATE <= S0;
+        END IF;
+        IF(RISING_EDGE(CLK))THEN
             CURRENT_STATE <=NEXT_STATE;
         END IF;
-    END IF;
-END PROCESS;
+    END PROCESS;
+    
 NEXT_STATE_LOGIC: PROCESS(X,CURRENT_STATE)
 BEGIN
-    NEXT_STATE <=S0;
+    NEXT_STATE <= S0;
     CASE(CURRENT_STATE)is
         when S0 =>
             IF(X='1')THEN
@@ -92,30 +91,31 @@ BEGIN
             ELSE
                 NEXT_STATE <=S0;
             END IF;            
-         WHEN OTHERS => NEXT_STATE <=S0;
+         WHEN OTHERS => NEXT_STATE <= S0;
      END CASE;
+     if (CURRENT_STATE = s3) then
+        fsm_state <= "111";
+     elsif (CURRENT_STATE = s4) then
+        fsm_state <= "110";  
+     else
+        fsm_state <= "000";  
+     end if; 
 END PROCESS;
 OUTPUT_LOGIC: PROCESS(CURRENT_STATE)
 BEGIN
     CASE(CURRENT_STATE)IS
         WHEN S0 =>
-            Z1<="11";
-            Z2<="11";
+            Z<="11";
         WHEN S1 =>
-            Z1<="11";
-            Z2<="11";
+            Z<="11";
         WHEN S2 =>
-            Z1<="11";
-            Z2<="11";
+            Z<="11";
         WHEN S3 =>
-            Z1<="01";
-            Z2<="01";   
+            Z<="10";  
         WHEN S4 =>
-            Z1<="10";
-            Z2<="10";                   
+            Z<="01";                 
         WHEN OTHERS =>
-            Z1<="11";
-            Z2<="11";
+            Z<="11";
       END CASE;
 END PROCESS;      
     

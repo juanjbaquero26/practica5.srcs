@@ -28,7 +28,7 @@ use ieee.numeric_std.all;
 
 entity vga_ctrl_640x480 is
 port(
-      clk, reset: in std_logic;
+      clk, rst: in std_logic;
       hsync, vsync: out std_logic;
       pixel_x, pixel_y: out std_logic_vector (9 downto 0);
       video_on, p_tick: out std_logic
@@ -59,9 +59,9 @@ architecture Behavioral of vga_ctrl_640x480 is
    signal h_end, v_end, pixel_tick: std_logic;
 begin
    -- registers
-   process (clk,reset)
+   process (clk,rst)
    begin
-      if reset='1' then
+      if rst='1' then
          mod2_reg <= '0';
          v_count_reg <= (others=>'0');
          h_count_reg <= (others=>'0');

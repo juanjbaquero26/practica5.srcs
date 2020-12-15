@@ -74,7 +74,7 @@ process (sw,pix_x,pix_y)
 		          elsif (((pix_x >= 100) and (pix_x <= 200)) and ((pix_y >= 201) and (pix_y <= 300))) then rgb_out <= negro;
 			      else rgb_out <= blanco;
 			      end if;
-		when "11" => --f 7
+		when others => --f 7
 			      if (((pix_x >= 50) and (pix_x <= 200)) and ((pix_y >= 50) and (pix_y <= 100))) then rgb_out <= negro; 
 			      elsif (((pix_x >= 250) and (pix_x <= 400)) and ((pix_y >= 50) and (pix_y <= 100))) then rgb_out <= negro; 
 			      elsif (((pix_x >= 50) and (pix_x <= 100)) and ((pix_y >= 101) and (pix_y <= 150))) then rgb_out <= negro;
