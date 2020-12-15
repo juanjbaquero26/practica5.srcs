@@ -55,9 +55,10 @@ architecture Behavioral of vga_output is
     Signal rst: std_logic := '0'; 
     signal hsync: std_logic;
     signal vsync: std_logic;
-    signal fsmin: std_logic := '1';
+    signal fsmin: std_logic;
     Signal deco7 : std_logic_vector (6 downto 0) := "0000000";
-    signal rgb_out : std_logic_vector (11 downto 0);       
+    signal rgb_out : std_logic_vector (11 downto 0);    
+       
     constant TbPeriod : time := 20 ns; 
     signal TbClock : std_logic := '0';
     signal TbSimEnded : std_logic := '0';
@@ -75,7 +76,6 @@ begin
         rgb_out => rgb_out
     );
     
-    clk <= not clk after 10 ns;      --reloj de 50MHz
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';     --reloj de 50MHz para los pixeles
     clk <= TbClock;
     rit:process
@@ -88,20 +88,24 @@ begin
     
     stimuli : process
 	  begin
+        fsmin <= '0';    
+       wait until vsync'event and vsync='0';
+        fsmin <= '0';
+       wait until vsync'event and vsync='0';
         fsmin <= '1';
-        wait for 16 ms;
+        wait until vsync'event and vsync='0';
         fsmin <= '1';
-        wait for 16 ms;
+       wait until vsync'event and vsync='0';
+        fsmin <= '0';
+       wait until vsync'event and vsync='0';
         fsmin <= '1';
-        wait for 16 ms;
+        wait until vsync'event and vsync='0';
+        fsmin <= '1';
+        wait until vsync'event and vsync='0';
+        fsmin <= '1';
+        wait until vsync'event and vsync='0';
         fsmin <= '0';
         wait until vsync'event and vsync='0';
---        wait for 16 ms;
-        fsmin <= '1';
-        wait for 16 ms;
-        fsmin <= '1';
-        wait for 16 ms;
-        fsmin <= '0';
         wait;
         end process;
         
