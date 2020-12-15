@@ -64,42 +64,48 @@ BEGIN
         when S0 =>
             IF(X='1')THEN
                 NEXT_STATE <= S1;
+                fsm_state <= "001";
             ELSE
                 NEXT_STATE <=S0;
+                fsm_state <= "000";
             END IF;
         WHEN S1 =>
             IF(X='1')THEN
                 NEXT_STATE <=S2;
+                fsm_state <= "011";
             ELSE
                 NEXT_STATE <=S0;
+                fsm_state <= "010";
+                
             END IF;    
         WHEN S2 =>
             IF(X='1')THEN
                 NEXT_STATE <=S3;
+                fsm_state <= "111";
             ELSE
                 NEXT_STATE <=S4;
+                fsm_state <= "110";
             END IF;    
         WHEN S3 =>
             IF(X='1')THEN
                 NEXT_STATE <=S3;
+                fsm_state <= "111";
             ELSE
                 NEXT_STATE <=S4;
+                fsm_state <= "110";
             END IF;
         WHEN S4 =>
             IF(X='1')THEN
                 NEXT_STATE <=S1;
+                fsm_state <= "101";
             ELSE
                 NEXT_STATE <=S0;
+                fsm_state <= "100";
             END IF;            
-         WHEN OTHERS => NEXT_STATE <= S0;
+         WHEN OTHERS => 
+         NEXT_STATE <= S0;
+         fsm_state <= "000";
      END CASE;
-     if (CURRENT_STATE = s3) then
-        fsm_state <= "111";
-     elsif (CURRENT_STATE = s4) then
-        fsm_state <= "110";  
-     else
-        fsm_state <= "000";  
-     end if; 
 END PROCESS;
 OUTPUT_LOGIC: PROCESS(CURRENT_STATE)
 BEGIN
@@ -111,9 +117,9 @@ BEGIN
         WHEN S2 =>
             Z<="11";
         WHEN S3 =>
-            Z<="10";  
+            Z<="01";  
         WHEN S4 =>
-            Z<="01";                 
+            Z<="10";                 
         WHEN OTHERS =>
             Z<="11";
       END CASE;

@@ -43,8 +43,7 @@ architecture Behavioral of leds is
         rst: in std_logic;
         fsmin: in std_logic;
         deco7: out std_logic_vector (6 downto 0);
-        fsm1: out std_logic_vector (1 downto 0);
-        fsm2: out std_logic_vector (1 downto 0)
+        fsm1: out std_logic_vector (1 downto 0)
     );
     end component;
     
@@ -53,7 +52,6 @@ architecture Behavioral of leds is
         signal fsmin: std_logic;
         signal deco7: std_logic_vector (6 downto 0);
         signal fsm1: std_logic_vector (1 downto 0);
-        signal fsm2: std_logic_vector (1 downto 0);
         
         constant TbPeriod : time := 20 ns; -- EDIT Put right period here
         signal TbClock : std_logic := '0';
@@ -61,31 +59,36 @@ architecture Behavioral of leds is
         
 begin
 
---    uut: blackdeco
---    port map (
---        clk => clk,
---        rst => rst,
---        fsmin => fsmin,
---        deco7 => deco7,
---        fsm1 => fsm1,
---        fsm2 => fsm2
---    );
+   uut: blackdeco
+    port map (
+        clk => clk,
+        rst => rst,
+        fsmin => fsmin,
+        deco7 => deco7,
+        fsm1 => fsm1
+  );
 --    -- Clock generation
 --    TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
 
 --    -- EDIT: Check that clk is really your main clock signal
 --    clk <= TbClock;
     
---    stm: process
---    begin
---        rst <= '1';
---        wait for 20 ns;
---        rst <= '0';
---        fsmin <= '1';
---        wait for 100 ns;
---        fsmin <= '1';
---        wait for 100 ns;
---        fsmin <= '1';
---        wait for 100 ns;
+   stm: process
+   begin
+       rst <= '1';
+       wait for 20 ns;
+       rst <= '0';
+       fsmin <= '0';
+        wait for 100 ns;
+        fsmin <= '1';
+       wait for 100 ns;
+        fsmin <= '1';
+       wait for 100 ns;
+       fsmin <='0';
+       wait for 100 ns;
+       
+   
+          
+    end process;
         
 end Behavioral;
