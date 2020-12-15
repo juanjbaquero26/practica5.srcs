@@ -78,19 +78,31 @@ begin
     clk <= not clk after 10 ns;      --reloj de 50MHz
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';     --reloj de 50MHz para los pixeles
     clk <= TbClock;
+    rit:process
+    begin
+         rst <='1';
+         wait for 20 ns;
+         rst <= '0';
+         wait;     
+    end process;
+    
     stimuli : process
 	  begin
-
-        rst <= '1';
-        wait for 20 ns;
-        rst <= '0';
-        wait for 20 ns;
         fsmin <= '1';
-        wait for 20 ns;
+        wait for 16 ms;
         fsmin <= '1';
-        wait for 20 ns;
+        wait for 16 ms;
+        fsmin <= '1';
+        wait for 16 ms;
         fsmin <= '0';
-        wait until vsync'event and vsync='0'; 
+        wait until vsync'event and vsync='0';
+--        wait for 16 ms;
+        fsmin <= '1';
+        wait for 16 ms;
+        fsmin <= '1';
+        wait for 16 ms;
+        fsmin <= '0';
+        wait;
         end process;
         
         process(clk)

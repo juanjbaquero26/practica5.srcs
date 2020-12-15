@@ -37,7 +37,7 @@ entity fsm is
   clk: in std_logic;
   reset : in std_logic;
   z: out std_logic_vector (1 downto 0);
-  fsm_state: out std_logic_vector(2 downto 0)  --revisar porque falta (?)
+  fsm_state: out std_logic_vector(2 downto 0)  
   );
 end fsm;
 
@@ -104,7 +104,7 @@ BEGIN
             END IF;            
          WHEN OTHERS => 
          NEXT_STATE <= S0;
-         fsm_state <= "000";
+         fsm_state <= "100";
      END CASE;
 END PROCESS;
 OUTPUT_LOGIC: PROCESS(CURRENT_STATE)
