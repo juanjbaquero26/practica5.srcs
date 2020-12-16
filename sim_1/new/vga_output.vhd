@@ -88,23 +88,24 @@ begin
     
     stimuli : process
 	  begin
-        fsmin <= '0';    
-       wait until vsync'event and vsync='0';
-        fsmin <= '0';
-       wait until vsync'event and vsync='0';
         fsmin <= '1';
+        wait for 20ns;
         wait until vsync'event and vsync='0';
         fsmin <= '1';
-       wait until vsync'event and vsync='0';
-        fsmin <= '0';
-       wait until vsync'event and vsync='0';
-        fsmin <= '1';
+        wait for 20ns;
         wait until vsync'event and vsync='0';
         fsmin <= '1';
         wait until vsync'event and vsync='0';
         fsmin <= '1';
+        wait for 20ns;
+        wait until vsync'event and vsync='0';
+        fsmin <= '1';
+        wait for 20ns;
         wait until vsync'event and vsync='0';
         fsmin <= '0';
+        wait until vsync'event and vsync='0';
+        fsmin <= '1';
+        wait for 20ns;
         wait until vsync'event and vsync='0';
         wait;
         end process;
