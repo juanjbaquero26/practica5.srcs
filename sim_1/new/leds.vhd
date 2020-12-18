@@ -36,7 +36,7 @@ use UNISIM.VComponents.all;
 entity leds is
 end leds;
 
-architecture Behavioral of leds is
+architecture Behavioral of leds is--instanciacion del modulo black deco en el cual se verifica la fms, el deco y el diviosor
     component blackdeco
     port(
         clk: in std_logic;
@@ -47,13 +47,13 @@ architecture Behavioral of leds is
     );
     end component;
     
-        signal clk: std_logic;
+        signal clk: std_logic;--señales necesarias para verifricar el funcionamiento de nuestro modulo
         signal rst: std_logic;
         signal fsmin: std_logic;
         signal deco7: std_logic_vector (6 downto 0);
         signal fsm1: std_logic_vector (1 downto 0);
         
-        constant TbPeriod : time := 20 ns; -- EDIT Put right period here
+        constant TbPeriod : time := 20 ns; -- señal de reloj necesaria para el divisor
         signal TbClock : std_logic := '0';
         signal TbSimEnded : std_logic := '0';
        
@@ -71,10 +71,8 @@ begin
     
      -- Clock generation
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
-
-    -- EDIT: Check that clk is really your main clock signal
     clk <= TbClock;
-   rit:process
+   rit:process--proceso para empezar el circuito en reset
     begin
          rst <='1';
          wait for 20 ns;
@@ -82,7 +80,7 @@ begin
          wait;
          
     end process;
-   stm: process
+   stm: process --proceso para verificar el correcto funcionamiento de nuestra fms
    begin
      
        fsmin <= '0';

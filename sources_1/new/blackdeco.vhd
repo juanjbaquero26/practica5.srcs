@@ -31,7 +31,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity blackdeco is
+entity blackdeco  is --modulo para verificar el funcionamiento de la fms, el deco y el divisor de freceuncia
   Port (
       clk: in std_logic;
       rst: in std_logic;
@@ -43,13 +43,13 @@ end blackdeco;
 
 architecture Behavioral of blackdeco is
 
-    component divisor
+    component divisor --instanciacion divisor
         port (
             clk50mhz: 	in STD_LOGIC;   
             clkdiv:		out STD_LOGIC
         );
         end component;        
-    component fsm
+    component fsm --instanciacion fms
         Port (
             x : in std_logic;
             clk: in std_logic;
@@ -58,14 +58,14 @@ architecture Behavioral of blackdeco is
             fsm_state: out std_logic_vector(2 downto 0)
         );
         end component;      
-    component deco 
+    component deco --instanciacion deco
         port (
             sal : out  std_logic_vector(6 downto 0); 
             ent : in std_logic_vector(2 downto 0)
         );        
     end component;
-    signal clk100ns: std_logic := '0';
-    signal fsm_states: std_logic_vector (2 downto 0) := "000";
+    signal clk100ns: std_logic := '0'; --señal que hace de cable entre el divisor y la fms
+    signal fsm_states: std_logic_vector (2 downto 0) := "000";--cable que hace de conexion entre la fms y el deco
     
 begin
     div: divisor port map(

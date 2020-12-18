@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity vga_conection is
+entity vga_conection is --entidad creada para el modulo final del proyecto
   Port (
       clk: in std_logic;
       rst: in std_logic;
@@ -45,13 +45,13 @@ end vga_conection;
 
 architecture Behavioral of vga_conection is
 
-    component divisor
+    component divisor--instanciacion de divisor
         port (
             clk50mhz: 	in STD_LOGIC;   
             clkdiv:		out STD_LOGIC
         );
         end component;        
-    component fsm
+    component fsm--instanciacion de maquina de estados
         Port (
             x : in std_logic;
             clk: in std_logic;
@@ -60,7 +60,7 @@ architecture Behavioral of vga_conection is
             fsm_state: out std_logic_vector(2 downto 0)
         );
         end component; 
-    component vga_ctrl_640x480 is
+    component vga_ctrl_640x480 is --instanciacion de la vga
         port (
                 clk, rst: in std_logic;
                 hsync, vsync: out std_logic;
@@ -68,21 +68,21 @@ architecture Behavioral of vga_conection is
                 video_on, p_tick: out std_logic
         );
         end component;   
-    component draw is
+    component draw is --instanciacion del modulo del dibujo
         Port ( pix_x : in STD_LOGIC_VECTOR (9 downto 0);
                pix_y : in STD_LOGIC_VECTOR (9 downto 0);
                sw : in STD_LOGIC_VECTOR (1 downto 0);
                video_on: in std_logic;
                rgb_out : out STD_LOGIC_VECTOR (11 downto 0));
         end component;  
-    component deco 
+    component deco --instanciacion de deco
         port (
             sal : out  std_logic_vector(6 downto 0); 
             ent : in std_logic_vector(2 downto 0)
         );        
     end component;
     
-    signal sig_pixel_x, sig_pixel_y:  std_logic_vector (9 downto 0);
+    signal sig_pixel_x, sig_pixel_y:  std_logic_vector (9 downto 0);--señales que son cables en nuestro modulo para diferentes conexiones en el
     signal sig_video_on: std_logic;
     signal clk100ns: std_logic := '0';
     signal fsm_states: std_logic_vector (2 downto 0) := "000";

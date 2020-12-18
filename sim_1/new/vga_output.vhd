@@ -41,7 +41,7 @@ end vga_output;
 
 architecture Behavioral of vga_output is
 
-    component vga_conection
+    component vga_conection --instanciacion de los componentes para la simulacion
         Port (
             clk: in std_logic;
             rst: in std_logic;
@@ -51,7 +51,7 @@ architecture Behavioral of vga_output is
             hsync, vsync: out std_logic);
         end component;
         
-    Signal clk: std_logic :='0'; 
+    Signal clk: std_logic :='0'; --señales para verificar el funcioanmeinto de nuestro modulo
     Signal rst: std_logic := '0'; 
     signal hsync: std_logic;
     signal vsync: std_logic;
@@ -59,13 +59,13 @@ architecture Behavioral of vga_output is
     Signal deco7 : std_logic_vector (6 downto 0) := "0000000";
     signal rgb_out : std_logic_vector (11 downto 0);    
        
-    constant TbPeriod : time := 20 ns; 
+    constant TbPeriod : time := 20 ns; --señal del reloj general de la fpga, que sera convertida por el divisor
     signal TbClock : std_logic := '0';
     signal TbSimEnded : std_logic := '0';
     
 begin
 
-    vg: vga_conection port map 
+    vg: vga_conection port map --conectamos los componentes con las señales para ver su funcionamiento 
     (
         clk => clk, 
         rst => rst,
@@ -78,7 +78,7 @@ begin
     
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';     --reloj de 50MHz para los pixeles
     clk <= TbClock;
-    rit:process
+    rit:process--stimulo del reset para empezar limpio
     begin
          rst <='1';
          wait for 20 ns;
@@ -86,7 +86,7 @@ begin
          wait;     
     end process;
     
-    stimuli : process
+    stimuli : process--proceso para verificar el funcionamiento de todo el modulo,con la entrada fmsin que es la entrada de la fms y verifica el comportaiento
 	  begin
         fsmin <= '1';
         wait for 20ns;
@@ -112,7 +112,7 @@ begin
         
         process(clk)
           
-    	file file_pointer: text open WRITE_MODE is "vga_sync_test.txt";
+    	file file_pointer: text open WRITE_MODE is "vga_sync_test.txt";--proceso para escribir en un archivo de texto
 	       variable line_el: line;
                 -- EDIT Adapt initialization as needed 
            -- EDIT Adapt initialization as needed		
